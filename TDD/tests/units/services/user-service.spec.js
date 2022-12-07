@@ -18,10 +18,6 @@ class UserMock {
 
     return null;
   }
-
-  // static async create({email}){
-  //     return true
-  // }
 }
 
 describe('User Service "userExists"', () => {
@@ -132,7 +128,7 @@ describe('User Service "create"', () => {
   });
 });
 
-describe("User service update Password", () => {
+describe("User service 'updatePassword'", () => {
   it("Should return a 'ok' message if it is a valid password", async () => {
     jest.spyOn(UserService, "userExists").mockImplementationOnce(() => true);
     jest.spyOn(User, "updateOne").mockImplementation(() => {
