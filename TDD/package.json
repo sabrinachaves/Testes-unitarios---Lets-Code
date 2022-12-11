@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "npx jest"
+    "test": "npx jest",
+    "test-coverage": "npx jest --coverage"
+
   },
   "keywords": [],
   "author": "",

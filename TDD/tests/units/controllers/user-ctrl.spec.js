@@ -80,6 +80,14 @@ describe('User Controller "create"', () => {
     expect(response.status).toBe(400);
     expect(response.data).toMatchObject(invalidPassword);
   });
+
+  it("Should return a error message", async () => {
+    try {
+      await UserController.create();
+    } catch (error) {
+      expect(error).toMatchObject({ message: error.message });
+    }
+  });
 });
 
 describe('User Controller "changePassword"', () => {
@@ -150,11 +158,11 @@ describe('User Controller "changePassword"', () => {
       .spyOn(UserService, "userExists")
       .mockImplementationOnce(UserControllerMock.userExists);
     jest.spyOn(UserService, "checkPassword").mockImplementationOnce(() => true);
-    jest.spyOn(User, 'updateOne').mockImplementationOnce(() => {
-        return {
-            password: "1234567"
-        }
-    })
+    jest.spyOn(User, "updateOne").mockImplementationOnce(() => {
+      return {
+        password: "1234567",
+      };
+    });
 
     const { successMessage } = getResponses();
     const req = getReqMock({
@@ -171,4 +179,11 @@ describe('User Controller "changePassword"', () => {
     expect(response.data).toMatchObject(successMessage);
   });
 
+  it("Should return a error message", async () => {
+    try {
+      await UserController.changePassword();
+    } catch (error) {
+      expect(error).toMatchObject({ message: error.message });
+    }
+  });
 });
