@@ -186,4 +186,5 @@ describe('User Controller "changePassword"', () => {
       expect(error).toMatchObject({ message: error.message });
     }
   });
+  
 });
