@@ -7,11 +7,13 @@ class UserController {
             const { name, email, password} = req.body
 
             if(!emailValidator(email)) {
-                return res.status(400).json({ message: 'Email is not provided or is invalid' })
+                throw { status: 400, message: 'Email is not provided or is invalid' }
+                //return res.status(400).json({ message: 'Email is not provided or is invalid' })
             }
     
             if(!password) {
-                return res.status(400).json({ message: 'Password is not provided' })
+                throw { status: 400, message: 'Password is not provided' }
+                //return res.status(400).json({ message: 'Password is not provided' })
             }
     
             const user = await UserService.create({ name, email, password })
@@ -20,7 +22,7 @@ class UserController {
                 user
             })
         } catch (error) {
-            return res.status(error.status || 500).json({ message: error.message })
+            return res.status(error.status).json({ message: error.message })
         }
 
     }
@@ -30,15 +32,18 @@ class UserController {
             const { email, oldPassword, newPassword, confirmPassword} = req.body
 
             if(!emailValidator(email)) {
-                return res.status(400).json({ message: 'Email is not provided or is invalid' })
+                throw { status: 400, message: 'Email is not provided or is invalid' }
+                //return res.status(400).json({ message: 'Email is not provided or is invalid' })
             }
     
             if(!oldPassword || !newPassword || !confirmPassword) {
-                return res.status(400).json({ message: 'Password is not provided' })
+                throw { status: 400, message: 'Password is not provided' }
+                //return res.status(400).json({ message: 'Password is not provided' })
             }
 
             if(!await UserService.checkPassword(email, oldPassword)) {
-                return res.status(401).json({ message: 'Credenciais inválidas'})
+                throw { status: 401,  message: 'Credenciais inválidas'}
+                //return res.status(401).json({ message: 'Credenciais inválidas'})
             }
 
             await UserService.updatePassword(email, newPassword, confirmPassword)
@@ -47,7 +52,7 @@ class UserController {
                 message: 'ok'
             })
         } catch (error) {
-            return res.status(error.status || 500).json({ message: error.message })
+            return res.status(error.status).json({ message: error.message })
         }
 
     }
